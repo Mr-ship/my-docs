@@ -86,7 +86,7 @@
 
 **为什么**：这一步用于证明「推送文档 → 自动构建 → 自动部署 → 网页更新」是 `push` 自动触发的，而不是靠 `workflow_dispatch` 手动触发。
 
-**结果**：新的运行由该次 push 自动触发并成功（`build` 17s、`deploy` 9s）；刷新网站后首页出现新增文字。Actions 的运行列表里可以看到两条成功记录，分别对应 `91d0ceb` 与 `1d9451f` 两次提交，事件均为 `push`。
+**结果**：新的运行由该次 push 自动触发并成功（`build` 17s、`deploy` 9s）；刷新网站后首页出现新增文字。实验验证阶段的两条运行记录分别对应 `91d0ceb` 与 `1d9451f` 两次提交，事件均为 `push`；之后对 `docs/` 的修改同样由 `push` 继续触发部署，也印证了这条自动更新链路。
 
 - 对应提交链接：https://github.com/Mr-ship/my-docs/commit/1d9451fdd80e6df0a32aacb83452088bf983c6b9
 - 对应 Actions 运行链接：https://github.com/Mr-ship/my-docs/actions/runs/43541714720
@@ -104,7 +104,7 @@
 | 只改报告或 README 后网站没有变化 | 核对 `on.push.paths` 与 Actions 运行列表 | 这两类文件不在触发路径内 | 确认这是设计上的预期行为，自动更新验证只改 `docs/index.md` |
 | 刷新后可能看不到新增文字 | 加 `?v=2` 与 `Cache-Control: no-cache` 复核 | CDN / 浏览器缓存旧页面 | 强制刷新或无痕窗口复核，确认新文字已上线 |
 
-两次运行都没有红色失败步骤。我逐项核对了 `build` 与 `deploy` 日志：依赖安装无报错、严格构建无警告、`upload-pages-artifact` 产出 1 个构件、`deploy-pages` 返回页面地址。日志中的 Annotations 是平台级 notice：`actions/configure-pages@v5`、`actions/deploy-pages@v4` 等动作仍以 Node.js 20 为目标、被强制运行到 Node.js 24，以及 `ubuntu-latest` 将迁移到 Ubuntu 26；这两条是弃用/迁移提示，不是失败，因此没有改动作业提供的官方工作流版本。
+上述验证用的两次运行都没有红色失败步骤。我逐项核对了 `build` 与 `deploy` 日志：依赖安装无报错、严格构建无警告、`upload-pages-artifact` 产出 1 个构件、`deploy-pages` 返回页面地址。日志中的 Annotations 是平台级 notice：`actions/configure-pages@v5`、`actions/deploy-pages@v4` 等动作仍以 Node.js 20 为目标、被强制运行到 Node.js 24，以及 `ubuntu-latest` 将迁移到 Ubuntu 26；这两条是弃用/迁移提示，不是失败，因此没有改动作业提供的官方工作流版本。
 
 ## 4. 原理理解
 
