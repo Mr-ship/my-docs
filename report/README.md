@@ -54,7 +54,7 @@
 
 **为什么**：本方案由工作流上传 `site/` 构件后发布，Pages 必须切换到 Actions 作为发布来源；不需要创建或切换到 `gh-pages` 分支，也不需要把默认权限改成全局读写、不需要勾选「允许创建和批准 PR」。
 
-**结果**：截图④中「资料来源」为 GitHub Actions，页面同时显示 `Your site is live at https://mr-ship.github.io/my-docs/`，并说明最近一次由 `Deploy MkDocs to GitHub Pages` 工作流部署到 `github-pages` 环境。工作流中的 `pages: write`、`id-token: write` 只在 `deploy` 任务生效。
+**结果**：截图④中「资料来源」为 GitHub Actions，页面同时显示 `Your site is live at https://mr-ship.github.io/my-docs/`。最近一次部署由 `Deploy MkDocs to GitHub Pages` 工作流发布到 `github-pages` 环境，可在截图⑤、⑦a 的 Actions 运行记录中核对。工作流中的 `pages: write`、`id-token: write` 只在 `deploy` 任务生效。
 
 ![Pages 发布来源设置为 GitHub Actions](images/04-pages-source.png)
 
