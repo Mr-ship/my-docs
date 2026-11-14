@@ -31,10 +31,6 @@ python -m mkdocs build --strict
 .\.venv\Scripts\Activate.ps1
 ```
 
-> macOS / Linux 则使用 `source .venv/bin/activate`。如果 PowerShell 阻止脚本运行，直接换用 Git Bash 的 `source` 命令即可，不必修改系统执行策略。
-
-`--strict` 值得保留：它会在本地就把失效的相对链接、写错的 `nav` 路径暴露出来，而不是等到 CI 里 `build` 失败再回头查日志。
-
 ## 哪些改动会触发部署
 
 工作流在 `push` 到 `main` 时，只有改动命中 `docs/**`、`mkdocs.yml`、`requirements.txt` 或 `.github/workflows/deploy.yml` 才会运行。
