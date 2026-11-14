@@ -24,8 +24,5 @@
 
 最容易混淆的是「构建产物」和「网站」：`site/` 只是本机或 CI 里的一堆 HTML 文件，上传到 Actions 构件后就已经和源码仓库解耦了；最终用户访问的页面来自 Pages 的托管环境，而不是 `main` 分支上的文件。所以本地删掉 `site/` 不会让网站下线，重新构建一次就能得到完全相同的结果。
 
-## 为什么选择官方 Pages Actions 方案
-
-工作流显式授予 `pages: write` 与 `id-token: write`，权限只给 `deploy` 任务，构建任务仍是只读的 `contents: read`。这样既不需要把仓库默认权限改成全局读写，也不需要创建 `gh-pages` 分支或开启「允许 Actions 创建和批准 PR」。发布来源设为 **GitHub Actions** 后，部署记录会集中出现在 `github-pages` 环境里，排错时比较容易对照。
 
 继续阅读：[使用指南](guide.md) · [API 参考](api.md) · [返回首页](index.md)
